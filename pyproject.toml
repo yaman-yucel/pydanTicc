@@ -1,0 +1,14 @@
+[project]
+name = "some-pydantic"
+version = "0.1.0"
+description = "derob"
+readme = "README.md"
+authors = [
+    { name = "Yaman Yucel", email = "yamanyucel0@gmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "pydantic>=2.11.5",
+    "pydantic-settings>=2.9.1",
+    "rich>=14.0.0",
+]
