@@ -1,4 +1,6 @@
-from pydantic import RootModel, field_validator
+from typing import Annotated
+
+from pydantic import Field, RootModel, field_validator
 from rich import print as rprint
 
 Pets = RootModel[list[str]]  # declares list[str] in a pydantic way, data conversion, validation etc..
@@ -48,3 +50,26 @@ a = EvenNumbers.model_validate([2, 4, 6])  # ✅
 # EvenNumbers.model_validate([1, 2])  ❌ Raises ValueError
 rprint(a.model_dump_json())
 rprint(EvenNumbers.model_json_schema())
+
+
+class FewInts(RootModel[Annotated[list[int], Field(min_items=2, max_items=4, frozen=True)]]):
+    pass
+
+
+# try:
+#     rprint(FewInts.model_validate([1, 2]))
+# except Exception as e:
+#     rprint(e)
+
+# try:
+#     rprint(FewInts.model_validate([1]))
+# except Exception as e:
+#     rprint(e)
+
+try:
+    a = FewInts.model_validate([1, 2, 3])
+    a.root.append(5)
+    rprint("hi")
+except Exception as e:
+    rprint(e)
+print(FewInts.model_json_schema())
